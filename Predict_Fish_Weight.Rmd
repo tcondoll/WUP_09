@@ -1,7 +1,7 @@
 ---
 title: "Weight of Fish"
-author: "Your Name"
-date: "`r Sys.Date()`"  
+author: "Taelynn Condoll"
+date: "summer 2022"  
 output: 
   html_document:
     number_sections: true
@@ -16,28 +16,111 @@ output:
 ```{r include=FALSE,echo=FALSE}
 require(tigerstats)
 require(tidyverse)
+
+Fish = read.csv("Fish.csv")
+Perch = filter(Fish, Species == "Perch")
+Pike = filter(Fish, Species == "Pike")
+Roach = filter(Fish, Species == "Roach")
 ```
 
 # Predicting Fish Weight
-
+``` {r}
+pwt = lm(Weight~ Length1+ Length2+ Length3 + Height,data =Perch)
+summary(pwt)
+```
 
 ## Perch
+```{r}
 
+pwt =  lm(Weight~ Length1 + Length2 + Length3 + Height, data = Perch)
+summary(pwt)
+```
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ Length1+ Length2 + Length3 + Height,
+               data = Perch,
+               nbest = 2,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+regsubsets.out
+```
+
+```{r}
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+```
 ### Best Models
+
+The best model would be 4(1) because it fills the most columns
 
 ### Best Two regressor model
 
+The best two regressor uses length 3 and Height. 
 
 ## Pike
+```{r}
 
+pwt =  lm(Weight~ Length1 + Length2 + Length3 + Height, data = Pike)
+summary(pwt)
+```
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ Length1+ Length2 + Length3 + Height,
+               data = Pike,
+               nbest = 2,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+regsubsets.out
+```
+
+```{r}
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+```
 ### Best Models
 
+The best model is 4(1) because it fills the most columns.
+
 ### Best Two regressor model
+
+The best two regressor model uses Length 1 and Length 3.
 
 ## Roach
+```{r}
 
+pwt =  lm(Weight~ Length1 + Length2 + Length3 + Height, data = Roach)
+summary(pwt)
+```
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ Length1+ Length2 + Length3 + Height,
+               data = Roach,
+               nbest = 2,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+regsubsets.out
+```
+
+```{r}
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+```
 ### Best Models
+
+The best model is regressor 4(1) because it checks all of the boxs.
 
 ### Best Two regressor model
 
+The best two regressor model is length 1 and length 3
+
 ## Final Summary Statements
+For Perch The best model would be 4(1) because it fills the most columnsaand the best two regressor uses length 3 and Height. For pike the best model is 4(1) because it fills the most columns.The best two regressor model uses Length 1 and Length 3. And lastly The best model is regressor 4(1) because it checks all of the boxs and the best two regressor model is length 1 and length for roach 3.
